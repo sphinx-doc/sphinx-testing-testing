@@ -29,18 +29,13 @@ class path(text_type):
                 return text_type.__new__(cls, s)
             return text_type.__new__(cls, s)
 
-    @property
-    def parent(self):
-        """
-        The name of the directory the file or directory is in.
-        """
-        return self.__class__(os.path.dirname(self))
-
     def basename(self):
         return os.path.basename(self)
 
     def dirname(self):
         return self.__class__(os.path.dirname(self))
+
+    parent = dirname
 
     def abspath(self):
         """
