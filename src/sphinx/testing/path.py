@@ -4,7 +4,7 @@
     path
     ~~~~
 
-    :copyright: Copyright 2007-2014 by the Sphinx team, see AUTHORS.
+    :copyright: Copyright 2007-2014 by the Sphinx team, see Sphinx-AUTHORS.
     :license: BSD, see LICENSE for details.
 """
 import os

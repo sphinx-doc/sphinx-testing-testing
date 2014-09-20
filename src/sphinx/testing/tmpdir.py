@@ -3,7 +3,7 @@
     tmpdir utilities
     ~~~~~~~~~~~~~~~~
 
-    :copyright: Copyright 2007-2014 by the Sphinx team, see Sphinx-AUTHORS.
+    :copyright: Copyright 2007-2014 by Takeshi KOMIYA
     :license: BSD, see LICENSE for details.
 """
 

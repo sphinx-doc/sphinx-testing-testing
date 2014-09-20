@@ -1,0 +1,7 @@
+sphinx-testing is written and maintained by Takeshi KOMIYA <i.tkomiya@gmail.com>.
+
+There are also a few modules or functions incorporated from other
+authors and projects:
+
+* sphinx.testing.path and sphinx.testing.util was written by Sphinx-team,
+  released under the BSD License (See Sphinx-AUTHORS)
