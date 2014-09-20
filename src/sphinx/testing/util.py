@@ -8,7 +8,6 @@
 """
 
 import shutil
-import tempfile
 from six import StringIO
 from functools import wraps
 
@@ -16,6 +15,7 @@ from sphinx import application
 from sphinx.theming import Theme
 from sphinx.ext.autodoc import AutoDirective
 from sphinx.testing.path import path
+from sphinx.testing.tmpdir import mkdtemp
 
 
 class ListOutput(object):
@@ -52,7 +52,7 @@ class TestApp(application.Sphinx):
         self.cleanup_trees = []
 
         if srcdir == '(empty)':
-            tempdir = path(tempfile.mkdtemp())
+            tempdir = mkdtemp()
             self.cleanup_trees.append(tempdir)
             temproot = tempdir / 'root'
             temproot.makedirs()
@@ -62,7 +62,7 @@ class TestApp(application.Sphinx):
             srcdir = path(srcdir)
 
         if _copy_to_temp:
-            tempdir = path(tempfile.mkdtemp())
+            tempdir = mkdtemp()
             self.cleanup_trees.append(tempdir)
             temproot = tempdir / srcdir.basename()
             srcdir.copytree(temproot)

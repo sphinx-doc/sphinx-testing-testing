@@ -7,16 +7,25 @@
     :license: BSD, see LICENSE for details.
 """
 
-import tempfile
 from functools import wraps
 from sphinx.testing.path import path
+
+
+def mkdtemp(suffix='', prefix='tmp', dir=None):
+    import tempfile
+    if isinstance(dir, path):
+        tmpdir = tempfile.mkdtemp(suffix, prefix, str(dir))
+    else:
+        tmpdir = tempfile.mkdtemp(suffix, prefix, dir)
+
+    return path(tmpdir)
 
 
 def with_tempdir(func):
     @wraps(func)
     def decorator(*args, **kwargs):
         try:
-            tmpdir = path(tempfile.mkdtemp())
+            tmpdir = mkdtemp()
             args = args + (tmpdir,)  # extends argument; add tmpdir at tail
             return func(*args, **kwargs)
         finally:
