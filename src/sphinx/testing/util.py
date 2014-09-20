@@ -15,8 +15,7 @@ from functools import wraps
 from sphinx import application
 from sphinx.theming import Theme
 from sphinx.ext.autodoc import AutoDirective
-
-from path import path
+from sphinx.testing.path import path
 
 
 class ListOutput(object):
