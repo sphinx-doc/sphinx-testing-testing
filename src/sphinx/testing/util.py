@@ -107,17 +107,20 @@ class TestApp(application.Sphinx):
         return '<%s buildername=%r>' % (self.__class__.__name__, self.builder.name)
 
 
-def with_app(*args, **kwargs):
+def with_app(*sphinxargs, **sphinxkwargs):
     """
     Make a TestApp with args and kwargs, pass it to the test and clean up
     properly.
     """
-    def generator(func):
+    def testcase(func):
         @wraps(func)
-        def deco(*args2, **kwargs2):
-            app = TestApp(*args, **kwargs)
-            func(app, *args2, **kwargs2)
-            # don't execute cleanup if test failed
-            app.cleanup()
-        return deco
-    return generator
+        def decorator(*args, **kwargs):
+            app = None
+            try:
+                app = TestApp(*sphinxargs, **sphinxkwargs)
+                func(*(args + (app,)), **kwargs)
+            finally:
+                if app:
+                    app.cleanup()
+        return decorator
+    return testcase
