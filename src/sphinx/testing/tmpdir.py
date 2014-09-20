@@ -21,7 +21,7 @@ def mkdtemp(suffix='', prefix='tmp', dir=None):
     return path(tmpdir)
 
 
-def with_tempdir(func):
+def with_tmpdir(func):
     @wraps(func)
     def decorator(*args, **kwargs):
         try:
