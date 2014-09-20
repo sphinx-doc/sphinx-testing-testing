@@ -45,11 +45,12 @@ class TestApp(application.Sphinx):
                  warningiserror=None, tags=None,
                  confname='conf.py', cleanenv=False,
                  _copy_to_temp=False,
-                 ):
+                 cleanup_on_errors=True):
 
         application.CONFIG_FILENAME = confname
 
         self.cleanup_trees = []
+        self.cleanup_on_errors = cleanup_on_errors
 
         if srcdir == '(empty)':
             tempdir = mkdtemp()
@@ -97,7 +98,10 @@ class TestApp(application.Sphinx):
                                     buildername, confoverrides, status, warning,
                                     freshenv, warningiserror, tags)
 
-    def cleanup(self, doctrees=False):
+    def cleanup(self, error=None):
+        if error and self.cleanup_on_errors is False:
+            return
+
         Theme.themes.clear()
         AutoDirective._registry.clear()
         for tree in self.cleanup_trees:
@@ -116,11 +120,17 @@ def with_app(*sphinxargs, **sphinxkwargs):
         @wraps(func)
         def decorator(*args, **kwargs):
             app = None
+            exc = None
             try:
                 app = TestApp(*sphinxargs, **sphinxkwargs)
                 func(*(args + (app,)), **kwargs)
+            except Exception as exc:
+                raise  # store exception to `exc` variable
             finally:
                 if app:
-                    app.cleanup()
+                    if exc:
+                        app.cleanup(error=exc)
+                    else:
+                        app.cleanup()
         return decorator
     return testcase
