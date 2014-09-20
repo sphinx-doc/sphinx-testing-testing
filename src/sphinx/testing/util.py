@@ -121,12 +121,3 @@ def with_app(*args, **kwargs):
             app.cleanup()
         return deco
     return generator
-
-
-def with_tempdir(func):
-    def new_func(*args, **kwds):
-        tempdir = path(tempfile.mkdtemp())
-        func(tempdir, *args, **kwds)
-        tempdir.rmtree()
-    new_func.__name__ = func.__name__
-    return new_func

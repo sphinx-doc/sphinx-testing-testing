@@ -7,4 +7,5 @@
     :license: BSD, see LICENSE for details.
 """
 
-from sphinx.testing.util import TestApp, with_app, with_tempdir  # NOQA: import for exporting
+from sphinx.testing.tmpdir import with_tempdir  # NOQA: import for exporting
+from sphinx.testing.util import TestApp, with_app  # NOQA: import for exporting
