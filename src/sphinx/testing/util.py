@@ -41,26 +41,28 @@ class TestApp(Sphinx):
                  buildername='html', confoverrides=None, status=None,
                  warning=None, freshenv=False, warningiserror=False, tags=None,
                  cleanenv=False, copy_srcdir_to_tmpdir=False,
-                 cleanup_on_errors=True):
+                 create_new_srcdir=False, cleanup_on_errors=True):
         self.cleanup_trees = []
         self.cleanup_on_errors = cleanup_on_errors
 
-        if srcdir == '(empty)':
-            tempdir = mkdtemp()
-            self.cleanup_trees.append(tempdir)
-            temproot = tempdir / 'root'
-            temproot.makedirs()
-            (temproot / 'conf.py').write_text('')
-            srcdir = temproot
-        else:
-            srcdir = path(srcdir)
+        if create_new_srcdir:
+            assert srcdir is None, 'conflicted: create_new_srcdir, srcdir'
+            tmpdir = mkdtemp()
+            self.cleanup_trees.append(tmpdir)
+            tmproot = tmpdir / 'root'
+            tmproot.makedirs()
+            (tmproot / 'conf.py').write_text('')
+            srcdir = tmproot
+
+        assert srcdir is not None, 'srcdir not found'
+        srcdir = path(srcdir)
 
         if copy_srcdir_to_tmpdir:
-            tempdir = mkdtemp()
-            self.cleanup_trees.append(tempdir)
-            temproot = tempdir / srcdir.basename()
-            srcdir.copytree(temproot)
-            srcdir = temproot
+            tmpdir = mkdtemp()
+            self.cleanup_trees.append(tmpdir)
+            tmproot = tmpdir / srcdir.basename()
+            srcdir.copytree(tmproot)
+            srcdir = tmproot
 
         self.builddir = srcdir.joinpath('_build')
         if confdir is None:
