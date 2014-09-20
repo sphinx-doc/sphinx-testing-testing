@@ -1,0 +1,4 @@
+Example documentation
+======================
+
+Hello world!
