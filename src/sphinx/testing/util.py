@@ -71,11 +71,11 @@ class TestApp(Sphinx):
         if confdir is None:
             confdir = srcdir
         if outdir is None:
-            outdir = srcdir.joinpath(self.builddir, buildername)
+            outdir = self.builddir.joinpath(buildername)
             if not outdir.isdir():
                 outdir.makedirs()
         if doctreedir is None:
-            doctreedir = srcdir.joinpath(srcdir, self.builddir, 'doctrees')
+            doctreedir = self.builddir.joinpath('doctrees')
             if not doctreedir.isdir():
                 doctreedir.makedirs()
         if confoverrides is None:
