@@ -1,4 +1,5 @@
 include AUTHORS
+include CHANGES.rst
 include LICENSE
 include MANIFEST.in
 include Sphinx-AUTHORS
