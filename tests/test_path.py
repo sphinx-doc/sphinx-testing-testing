@@ -30,8 +30,6 @@ class TestPath(unittest.TestCase):
         self.assertEqual("/path", p.dirname().dirname())
         self.assertEqual("/", p.dirname().dirname().dirname())
 
-        self.assertEqual("/path/to", p.parent())
-
     def test_abspath(self):
         p = path('.')
         self.assertIsInstance(p.abspath(), path)

@@ -37,7 +37,7 @@ class TestTmpdir(unittest.TestCase):
         try:
             parent = mkdtemp()
             tmpdir = mkdtemp(dir=parent)
-            self.assertTrue(parent, tmpdir.parent)
+            self.assertTrue(parent, tmpdir.dirname())
         finally:
             parent.rmtree()
 
