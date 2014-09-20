@@ -58,5 +58,5 @@ class TestTmpdir(unittest.TestCase):
         try:
             testcase2()
         except Exception as exc:
-            tmpdir = exc[0]
+            tmpdir = exc.args[0]
             self.assertFalse(tmpdir.isdir())

@@ -190,18 +190,18 @@ class TestPath(unittest.TestCase):
     @with_tmpdir
     def test_write_bytes(self, tmpdir):
         filename = "%s/test.file" % tmpdir
-        path(filename).write_bytes('hello world')
+        path(filename).write_bytes(b'hello world')
 
-        text = open(filename).read()
-        self.assertEqual('hello world', text)
+        text = open(filename, 'rb').read()
+        self.assertEqual(b'hello world', text)
 
     @with_tmpdir
     def test_read_bytes(self, tmpdir):
         filename = "%s/test.file" % tmpdir
         with open(filename, 'wb') as fd:
-            fd.write('hello world')
+            fd.write(b'hello world')
 
-        self.assertEqual('hello world', path(filename).read_bytes())
+        self.assertEqual(b'hello world', path(filename).read_bytes())
 
     @with_tmpdir
     def test_exists(self, tmpdir):
