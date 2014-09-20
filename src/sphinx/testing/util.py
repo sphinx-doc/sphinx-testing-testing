@@ -11,9 +11,7 @@ import shutil
 from six import StringIO
 from functools import wraps
 
-from sphinx import application
-from sphinx.theming import Theme
-from sphinx.ext.autodoc import AutoDirective
+from sphinx.application import Sphinx
 from sphinx.testing.path import path
 from sphinx.testing.tmpdir import mkdtemp
 
@@ -33,22 +31,17 @@ class ListOutput(object):
         self.content.append(text)
 
 
-class TestApp(application.Sphinx):
+class TestApp(Sphinx):
     """
     A subclass of :class:`Sphinx` that runs on the test root, with some
     better default values for the initialization parameters.
     """
 
     def __init__(self, srcdir=None, confdir=None, outdir=None, doctreedir=None,
-                 buildername='html', confoverrides=None,
-                 status=None, warning=None, freshenv=None,
-                 warningiserror=None, tags=None,
-                 confname='conf.py', cleanenv=False,
-                 _copy_to_temp=False,
+                 buildername='html', confoverrides=None, status=None,
+                 warning=None, freshenv=False, warningiserror=False, tags=None,
+                 cleanenv=False, _copy_to_temp=False,
                  cleanup_on_errors=True):
-
-        application.CONFIG_FILENAME = confname
-
         self.cleanup_trees = []
         self.cleanup_on_errors = cleanup_on_errors
 
@@ -89,16 +82,19 @@ class TestApp(application.Sphinx):
             status = StringIO()
         if warning is None:
             warning = ListOutput('stderr')
-        if freshenv is None:
-            freshenv = False
-        if warningiserror is None:
-            warningiserror = False
 
-        application.Sphinx.__init__(self, srcdir, confdir, outdir, doctreedir,
-                                    buildername, confoverrides, status, warning,
-                                    freshenv, warningiserror, tags)
+        Sphinx.__init__(self, srcdir, confdir, outdir, doctreedir,
+                        buildername, confoverrides, status,
+                        warning, freshenv, warningiserror, tags)
+
+    def __repr__(self):
+        classname = self.__class__.__name__
+        return '<%s buildername=%r>' % (classname, self.builder.name)
 
     def cleanup(self, error=None):
+        from sphinx.theming import Theme
+        from sphinx.ext.autodoc import AutoDirective
+
         if error and self.cleanup_on_errors is False:
             return
 
@@ -106,9 +102,6 @@ class TestApp(application.Sphinx):
         AutoDirective._registry.clear()
         for tree in self.cleanup_trees:
             shutil.rmtree(tree, True)
-
-    def __repr__(self):
-        return '<%s buildername=%r>' % (self.__class__.__name__, self.builder.name)
 
 
 def with_app(*sphinxargs, **sphinxkwargs):
