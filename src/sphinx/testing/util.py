@@ -40,8 +40,8 @@ class TestApp(Sphinx):
     def __init__(self, srcdir=None, confdir=None, outdir=None, doctreedir=None,
                  buildername='html', confoverrides=None, status=None,
                  warning=None, freshenv=False, warningiserror=False, tags=None,
-                 cleanenv=False, copy_srcdir_to_tmpdir=False,
-                 create_new_srcdir=False, cleanup_on_errors=True):
+                 copy_srcdir_to_tmpdir=False, create_new_srcdir=False,
+                 cleanup_on_errors=True):
         self.cleanup_trees = []
         self.cleanup_on_errors = cleanup_on_errors
 
@@ -63,8 +63,11 @@ class TestApp(Sphinx):
             tmproot = tmpdir / srcdir.basename()
             srcdir.copytree(tmproot)
             srcdir = tmproot
+            self.builddir = srcdir.joinpath('_build')
+        else:
+            self.builddir = mkdtemp()
+            self.cleanup_trees.append(self.builddir)
 
-        self.builddir = srcdir.joinpath('_build')
         if confdir is None:
             confdir = srcdir
         if outdir is None:
@@ -76,8 +79,6 @@ class TestApp(Sphinx):
             doctreedir = srcdir.joinpath(srcdir, self.builddir, 'doctrees')
             if not doctreedir.isdir():
                 doctreedir.makedirs()
-            if cleanenv:
-                self.cleanup_trees.insert(0, doctreedir)
         if confoverrides is None:
             confoverrides = {}
         if status is None:
