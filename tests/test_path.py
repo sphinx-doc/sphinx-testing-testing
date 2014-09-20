@@ -182,12 +182,12 @@ class TestPath(unittest.TestCase):
         self.assertEqual('hello world', text)
 
     @with_tmpdir
-    def test_text(self, tmpdir):
+    def test_read_text(self, tmpdir):
         filename = "%s/test.file" % tmpdir
         with open(filename, 'w') as fd:
             fd.write('hello world')
 
-        self.assertEqual('hello world', path(filename).text())
+        self.assertEqual('hello world', path(filename).read_text())
 
     @with_tmpdir
     def test_write_bytes(self, tmpdir):
@@ -198,12 +198,12 @@ class TestPath(unittest.TestCase):
         self.assertEqual('hello world', text)
 
     @with_tmpdir
-    def test_bytes(self, tmpdir):
+    def test_read_bytes(self, tmpdir):
         filename = "%s/test.file" % tmpdir
         with open(filename, 'wb') as fd:
             fd.write('hello world')
 
-        self.assertEqual('hello world', path(filename).bytes())
+        self.assertEqual('hello world', path(filename).read_bytes())
 
     @with_tmpdir
     def test_exists(self, tmpdir):

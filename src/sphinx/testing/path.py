@@ -129,7 +129,7 @@ class path(text_type):
         finally:
             f.close()
 
-    def text(self, **kwargs):
+    def read_text(self, **kwargs):
         """
         Returns the text in the file.
         """
@@ -139,7 +139,7 @@ class path(text_type):
         finally:
             f.close()
 
-    def bytes(self):
+    def read_bytes(self):
         """
         Returns the bytes in the file.
         """
