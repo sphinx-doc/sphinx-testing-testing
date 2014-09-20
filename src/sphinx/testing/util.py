@@ -74,7 +74,6 @@ class TestApp(Sphinx):
             outdir = srcdir.joinpath(self.builddir, buildername)
             if not outdir.isdir():
                 outdir.makedirs()
-            self.cleanup_trees.insert(0, outdir)
         if doctreedir is None:
             doctreedir = srcdir.joinpath(srcdir, self.builddir, 'doctrees')
             if not doctreedir.isdir():
