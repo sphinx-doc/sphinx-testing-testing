@@ -103,7 +103,7 @@ class path(text_type):
         """
         shutil.copytree(self, destination, symlinks=symlinks)
 
-    def movetree(self, destination):
+    def move(self, destination):
         """
         Recursively move the file or directory to the given `destination`
         similar to the  Unix "mv" command.
@@ -112,8 +112,6 @@ class path(text_type):
         :func:`os.rename` semantics.
         """
         shutil.move(self, destination)
-
-    move = movetree
 
     def unlink(self):
         """

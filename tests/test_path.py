@@ -134,7 +134,7 @@ class TestPath(unittest.TestCase):
         self.assertTrue(os.path.islink("%s/test.symlink" % dstdir))
 
     @with_tmpdir
-    def test_movetree(self, tmpdir):
+    def test_move(self, tmpdir):
         subdir = mkdtemp(dir=tmpdir)
         subsubdir = "%s/subdir" % subdir
         filename = "%s/test.file" % subdir
@@ -143,17 +143,19 @@ class TestPath(unittest.TestCase):
         open(filename, 'w').close()  # create empty file
         os.symlink(__file__, symlink)
 
+        # rename
         dstdir = os.path.join(tmpdir, "dstdir")
-        path(subdir).movetree(dstdir)
+        path(subdir).move(dstdir)
         self.assertFalse(os.path.exists(subdir))
         self.assertTrue(os.path.exists(dstdir))
         self.assertTrue(os.path.isdir("%s/subdir" % dstdir))
         self.assertTrue(os.path.isfile("%s/test.file" % dstdir))
         self.assertTrue(os.path.islink("%s/test.symlink" % dstdir))
 
+        # move into the directory
         dstdir2 = mkdtemp(dir=tmpdir)
         dstsubdir = "%s/%s" % (dstdir2, os.path.basename(dstdir))
-        path(dstdir).movetree(dstdir2)
+        path(dstdir).move(dstdir2)
         self.assertFalse(os.path.exists(dstdir))
         self.assertTrue(os.path.exists(dstdir2))
         self.assertTrue(os.path.exists(dstsubdir))
