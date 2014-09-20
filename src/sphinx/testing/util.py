@@ -40,7 +40,7 @@ class TestApp(Sphinx):
     def __init__(self, srcdir=None, confdir=None, outdir=None, doctreedir=None,
                  buildername='html', confoverrides=None, status=None,
                  warning=None, freshenv=False, warningiserror=False, tags=None,
-                 cleanenv=False, _copy_to_temp=False,
+                 cleanenv=False, copy_srcdir_to_tmpdir=False,
                  cleanup_on_errors=True):
         self.cleanup_trees = []
         self.cleanup_on_errors = cleanup_on_errors
@@ -55,7 +55,7 @@ class TestApp(Sphinx):
         else:
             srcdir = path(srcdir)
 
-        if _copy_to_temp:
+        if copy_srcdir_to_tmpdir:
             tempdir = mkdtemp()
             self.cleanup_trees.append(tempdir)
             temproot = tempdir / srcdir.basename()
