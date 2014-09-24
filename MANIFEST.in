@@ -4,3 +4,5 @@ include LICENSE
 include MANIFEST.in
 include Sphinx-AUTHORS
 include tox.ini
+include .drone.io.sh
+recursive-include tests *.py *.rst
