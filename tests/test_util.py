@@ -6,6 +6,9 @@ if sys.version_info < (2, 7):
 else:
     import unittest
 
+if sys.version_info < (3,):
+    unittest.TestCase.assertCountEqual = unittest.TestCase.assertItemsEqual
+
 if sys.version_info < (3, 3):
     from mock import patch
 else:
@@ -55,7 +58,7 @@ class TestSphinxTesting(unittest.TestCase):
             self.assertEqual(srcdir, app.srcdir)
             self.assertNotEqual(app.srcdir, app.builddir.dirname())
             self.assertTrue(app.builddir.isdir())
-            self.assertItemsEqual(['conf.py', 'index.rst'],
+            self.assertCountEqual(['conf.py', 'index.rst'],
                                   os.listdir(app.srcdir))
             self.assertEqual((srcdir / 'conf.py').read_text(),
                              (app.srcdir / 'conf.py').read_text())
@@ -90,7 +93,7 @@ class TestSphinxTesting(unittest.TestCase):
             self.assertNotEqual(srcdir, app.srcdir)
             self.assertEqual(app.srcdir, app.builddir.dirname())
             self.assertTrue(app.builddir.isdir())
-            self.assertItemsEqual(['_build', 'conf.py', 'index.rst'],
+            self.assertCountEqual(['_build', 'conf.py', 'index.rst'],
                                   os.listdir(app.srcdir))
             self.assertEqual((srcdir / 'conf.py').read_text(),
                              (app.srcdir / 'conf.py').read_text())

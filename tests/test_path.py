@@ -6,6 +6,9 @@ if sys.version_info < (2, 7):
 else:
     import unittest
 
+if sys.version_info < (3,):
+    unittest.TestCase.assertCountEqual = unittest.TestCase.assertItemsEqual
+
 import os
 import shutil
 from tempfile import mkdtemp
@@ -190,7 +193,7 @@ class TestPath(unittest.TestCase):
         os.symlink(__file__, symlink)
 
         files = path(tmpdir).listdir()
-        self.assertItemsEqual(['subdir', 'test.file', 'test.symlink'], files)
+        self.assertCountEqual(['subdir', 'test.file', 'test.symlink'], files)
 
     @with_tmpdir
     def test_write_text(self, tmpdir):
