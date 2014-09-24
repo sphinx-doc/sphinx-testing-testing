@@ -12,7 +12,6 @@ else:
     from unittest.mock import patch
 
 import os
-import shutil
 import sphinx
 from six import StringIO
 from sphinx.testing.path import path
