@@ -135,15 +135,21 @@ class TestSphinxTesting(unittest.TestCase):
         srcdir = path(__file__).dirname() / 'examples'
         builddir = []
 
-        @with_app(srcdir=srcdir)
-        def execute(app):
+        @with_app(srcdir=srcdir, copy_srcdir_to_tmpdir=True)
+        def execute(app, status, warning):
+            (app.srcdir / 'unknown.rst').write_text('')
             builddir.append(app.builddir)  # store to check outside of func
             if sphinx.__version__ < '1.0.0':
                 app.build(True, None)
             else:
                 app.build()
 
+            self.assertIsInstance(status, StringIO)
+            self.assertIsInstance(warning, StringIO)
             self.assertIn('index.html', os.listdir(app.outdir))
+            self.assertIn('Running Sphinx', status.getvalue())
+            self.assertIn("WARNING: document isn't included in any toctree",
+                          warning.getvalue())
 
         execute()
         self.assertFalse(builddir[0].exists())

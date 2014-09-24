@@ -117,8 +117,10 @@ def with_app(*sphinxargs, **sphinxkwargs):
             app = None
             exc = None
             try:
+                status = sphinxkwargs.setdefault('status', StringIO())
+                warning = sphinxkwargs.setdefault('warning', StringIO())
                 app = TestApp(*sphinxargs, **sphinxkwargs)
-                func(*(args + (app,)), **kwargs)
+                func(*(args + (app, status, warning)), **kwargs)
             except Exception as exc:
                 raise  # store exception to `exc` variable
             finally:
