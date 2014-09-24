@@ -55,8 +55,8 @@ class TestSphinxTesting(unittest.TestCase):
             self.assertEqual(srcdir, app.srcdir)
             self.assertNotEqual(app.srcdir, app.builddir.dirname())
             self.assertTrue(app.builddir.isdir())
-            self.assertEqual(['conf.py', 'index.rst'],
-                             os.listdir(app.srcdir))
+            self.assertItemsEqual(['conf.py', 'index.rst'],
+                                  os.listdir(app.srcdir))
             self.assertEqual((srcdir / 'conf.py').read_text(),
                              (app.srcdir / 'conf.py').read_text())
             self.assertEqual((srcdir / 'index.rst').read_text(),
@@ -90,8 +90,8 @@ class TestSphinxTesting(unittest.TestCase):
             self.assertNotEqual(srcdir, app.srcdir)
             self.assertEqual(app.srcdir, app.builddir.dirname())
             self.assertTrue(app.builddir.isdir())
-            self.assertEqual(['_build', 'conf.py', 'index.rst'],
-                             os.listdir(app.srcdir))
+            self.assertItemsEqual(['_build', 'conf.py', 'index.rst'],
+                                  os.listdir(app.srcdir))
             self.assertEqual((srcdir / 'conf.py').read_text(),
                              (app.srcdir / 'conf.py').read_text())
             self.assertEqual((srcdir / 'index.rst').read_text(),

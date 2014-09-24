@@ -190,7 +190,7 @@ class TestPath(unittest.TestCase):
         os.symlink(__file__, symlink)
 
         files = path(tmpdir).listdir()
-        self.assertEqual(['subdir', 'test.file', 'test.symlink'], files)
+        self.assertItemsEqual(['subdir', 'test.file', 'test.symlink'], files)
 
     @with_tmpdir
     def test_write_text(self, tmpdir):
@@ -251,15 +251,20 @@ class TestPath(unittest.TestCase):
 
     @with_tmpdir
     def test_makedirs(self, tmpdir):
-        subdir = "%s/path/to/subdir" % tmpdir
-        path(subdir).makedirs()
-        self.assertTrue(os.path.isdir(subdir))
-        self.assertEqual(0o755, os.stat(subdir).st_mode & 0o777)
+        try:
+            umask = os.umask(0o000)  # reset umask at first
 
-        subdir = "%s/another/path/to/subdir" % tmpdir
-        path(subdir).makedirs(0o700)
-        self.assertTrue(os.path.isdir(subdir))
-        self.assertEqual(0o700, os.stat(subdir).st_mode & 0o777)
+            subdir = "%s/path/to/subdir" % tmpdir
+            path(subdir).makedirs()
+            self.assertTrue(os.path.isdir(subdir))
+            self.assertEqual(0o777, os.stat(subdir).st_mode & 0o777)
+
+            subdir = "%s/another/path/to/subdir" % tmpdir
+            path(subdir).makedirs(0o700)
+            self.assertTrue(os.path.isdir(subdir))
+            self.assertEqual(0o700, os.stat(subdir).st_mode & 0o777)
+        finally:
+            os.umask(umask)
 
     @with_tmpdir
     def test_jonpath(self, tmpdir):
