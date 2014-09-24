@@ -117,6 +117,15 @@ class path(text_type):
         """
         os.unlink(self)
 
+    def utime(self, times):
+        """
+        Set the access and modified times.
+        """
+        os.utime(self, times)
+
+    def listdir(self):
+        return os.listdir(self)
+
     def write_text(self, text, **kwargs):
         """
         Writes the given `text` to the file.

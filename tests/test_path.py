@@ -172,6 +172,27 @@ class TestPath(unittest.TestCase):
         self.assertFalse(os.path.exists(symlink))
 
     @with_tmpdir
+    def test_utime(self, tmpdir):
+        filename = "%s/test.file" % tmpdir
+        open(filename, 'w').close()  # create empty file
+
+        path(filename).utime((123, 456))
+        self.assertEqual(123, os.stat(filename).st_atime)
+        self.assertEqual(456, os.stat(filename).st_mtime)
+
+    @with_tmpdir
+    def test_listdir(self, tmpdir):
+        subdir = "%s/subdir" % tmpdir
+        filename = "%s/test.file" % tmpdir
+        symlink = "%s/test.symlink" % tmpdir
+        os.makedirs(subdir)
+        open(filename, 'w').close()  # create empty file
+        os.symlink(__file__, symlink)
+
+        files = path(tmpdir).listdir()
+        self.assertEqual(['subdir', 'test.file', 'test.symlink'], files)
+
+    @with_tmpdir
     def test_write_text(self, tmpdir):
         filename = "%s/test.file" % tmpdir
         path(filename).write_text('hello world')
