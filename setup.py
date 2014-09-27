@@ -26,7 +26,7 @@ if sys.version_info < (3, 3):
 
 setup(
     name='sphinx-testing',
-    version='0.2.0',
+    version='0.3.0',
     description='testing utility classes and functions for Sphinx extensions',
     classifiers=classifiers,
     keywords=['sphinx', 'testing'],
