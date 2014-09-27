@@ -17,8 +17,8 @@ else:
 import os
 import sphinx
 from six import StringIO
-from sphinx.testing.path import path
-from sphinx.testing.util import ListOutput, TestApp, with_app
+from sphinx_testing.path import path
+from sphinx_testing.util import ListOutput, TestApp, with_app
 
 
 class TestSphinxTesting(unittest.TestCase):

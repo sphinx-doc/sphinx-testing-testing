@@ -8,7 +8,7 @@
 """
 
 from functools import wraps
-from sphinx.testing.path import path
+from sphinx_testing.path import path
 
 
 def mkdtemp(suffix='', prefix='tmp', dir=None):

@@ -12,8 +12,8 @@ if sys.version_info < (3,):
 import os
 import shutil
 from tempfile import mkdtemp
-from sphinx.testing import with_tmpdir
-from sphinx.testing.path import path
+from sphinx_testing import with_tmpdir
+from sphinx_testing.path import path
 
 
 class TestPath(unittest.TestCase):

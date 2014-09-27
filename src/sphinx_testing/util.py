@@ -12,8 +12,8 @@ from six import StringIO
 from functools import wraps
 
 from sphinx.application import Sphinx
-from sphinx.testing.path import path
-from sphinx.testing.tmpdir import mkdtemp
+from sphinx_testing.path import path
+from sphinx_testing.tmpdir import mkdtemp
 
 
 class ListOutput(object):

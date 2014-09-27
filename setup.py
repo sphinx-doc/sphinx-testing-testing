@@ -35,7 +35,6 @@ setup(
     url='http://bitbucket.org/tk0miya/sphinx-testing',
     packages=find_packages('src'),
     package_dir={'': 'src'},
-    namespace_packages=['sphinx'],
     include_package_data=True,
     install_requires=[
         'Sphinx',

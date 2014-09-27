@@ -7,8 +7,8 @@ else:
     import unittest
 
 import shutil
-from sphinx.testing.path import path
-from sphinx.testing.tmpdir import mkdtemp, with_tmpdir
+from sphinx_testing.path import path
+from sphinx_testing.tmpdir import mkdtemp, with_tmpdir
 
 
 class TestTmpdir(unittest.TestCase):
