@@ -27,7 +27,7 @@ Example::
     from sphinx_testing import with_app
 
     @with_app(buildername='html', srcdir='/path/to/examples', copy_srcdir_to_tmpdir=True)
-    def test_sphinx_build(app):
+    def test_sphinx_build(app, status, warning):
         app.build()
         html = (app.outdir / 'index.html').read_text()
         assert '<h1>Hello world</h1>' in html
