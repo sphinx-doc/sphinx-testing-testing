@@ -158,10 +158,11 @@ class TestSphinxTesting(unittest.TestCase):
         self.assertFalse(builddir[0].exists())
 
     def test_with_app_bad_args(self):
-        srcdir = path(__file__).dirname() / 'examples'
+        with self.assertRaises(TypeError):
+            srcdir = path(__file__).dirname() / 'examples'
 
-        @with_app(srcdir=srcdir, copy_srcdir_to_tmpdir=True)
-        def execute(oops):
-            pass
+            @with_app(srcdir=srcdir, copy_srcdir_to_tmpdir=True)
+            def execute(oops):
+                pass
 
-        execute()
+            execute()
