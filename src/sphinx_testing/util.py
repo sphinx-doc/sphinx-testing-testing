@@ -121,8 +121,9 @@ def with_app(*sphinxargs, **sphinxkwargs):
                 warning = sphinxkwargs.setdefault('warning', StringIO())
                 app = TestApp(*sphinxargs, **sphinxkwargs)
                 func(*(args + (app, status, warning)), **kwargs)
-            except Exception as exc:
-                raise  # store exception to `exc` variable
+            except Exception as _exc:
+                exc = _exc
+                raise
             finally:
                 if app:
                     if exc:
