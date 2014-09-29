@@ -159,6 +159,7 @@ class TestSphinxTesting(unittest.TestCase):
 
     def test_with_app_bad_args(self):
         with self.assertRaises(TypeError):
+            # TypeError: execute() takes 1 positional argument but 3 were given
             srcdir = path(__file__).dirname() / 'examples'
 
             @with_app(srcdir=srcdir, copy_srcdir_to_tmpdir=True)
