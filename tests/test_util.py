@@ -18,6 +18,7 @@ import os
 import sphinx
 from six import StringIO
 from sphinx_testing.path import path
+from sphinx_testing.tmpdir import mkdtemp
 from sphinx_testing.util import ListOutput, TestApp, with_app
 
 
@@ -157,13 +158,17 @@ class TestSphinxTesting(unittest.TestCase):
         execute()
         self.assertFalse(builddir[0].exists())
 
-    def test_with_app_bad_args(self):
+    @patch("sphinx_testing.util.mkdtemp")
+    def test_with_app_bad_args(self, _mkdtemp):
+        tmpdir = _mkdtemp.return_value = mkdtemp()
+        srcdir = path(__file__).dirname() / 'examples'
+
+        @with_app(srcdir=srcdir, copy_srcdir_to_tmpdir=True)
+        def execute(oops):
+            pass
+
         with self.assertRaises(TypeError):
             # TypeError: execute() takes 1 positional argument but 3 were given
-            srcdir = path(__file__).dirname() / 'examples'
-
-            @with_app(srcdir=srcdir, copy_srcdir_to_tmpdir=True)
-            def execute(oops):
-                pass
-
             execute()
+
+        self.assertFalse(tmpdir.exists())
