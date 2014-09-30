@@ -1,6 +1,13 @@
 Changelog
 ==========
 
+0.4.0 (2014-09-30)
+-------------------
+- Add pathlib like accessors to path class: parent, name, suffix and stem
+- Fix bug:
+
+   - #1 Fix exc assignment in with_app decorator.
+
 0.3.0 (2014-09-27)
 -------------------
 - Rename sphinx.testing package to sphinx_testing
