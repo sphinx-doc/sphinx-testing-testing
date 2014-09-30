@@ -29,6 +29,22 @@ class path(text_type):
                 return text_type.__new__(cls, s)
             return text_type.__new__(cls, s)
 
+    @property
+    def parent(self):
+        return self.dirname()
+
+    @property
+    def name(self):
+        return self.basename()
+
+    @property
+    def suffix(self):
+        return os.path.splitext(self)[1]
+
+    @property
+    def stem(self):
+        return os.path.splitext(self)[0]
+
     def basename(self):
         return os.path.basename(self)
 

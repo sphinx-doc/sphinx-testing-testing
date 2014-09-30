@@ -22,14 +22,21 @@ class TestPath(unittest.TestCase):
         self.assertIsInstance(p, path)
         self.assertEqual('/path/to/file', p)
 
+    def test_suffix(self):
+        p = path('/path/to/file.ext')
+        self.assertEqual(".ext", p.suffix)
+        self.assertEqual("/path/to/file", p.stem)
+
     def test_basename(self):
         p = path('/path/to/file')
         self.assertEqual("file", p.basename())
+        self.assertEqual("file", p.name)
 
     def test_dirname(self):
         p = path('/path/to/file')
         self.assertIsInstance(p.dirname(), path)
         self.assertEqual("/path/to", p.dirname())
+        self.assertEqual("/path/to", p.parent)
         self.assertEqual("/path", p.dirname().dirname())
         self.assertEqual("/", p.dirname().dirname().dirname())
 
