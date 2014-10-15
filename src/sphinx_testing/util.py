@@ -10,6 +10,7 @@
 import shutil
 from six import StringIO
 from functools import wraps
+from textwrap import dedent
 
 from sphinx.application import Sphinx
 from sphinx_testing.path import path
@@ -119,7 +120,18 @@ def with_app(*sphinxargs, **sphinxkwargs):
             try:
                 status = sphinxkwargs.setdefault('status', StringIO())
                 warning = sphinxkwargs.setdefault('warning', StringIO())
+                write_docstring = sphinxkwargs.pop('write_docstring', None)
                 app = TestApp(*sphinxargs, **sphinxkwargs)
+
+                if write_docstring:
+                    if write_docstring is True:
+                        path = app.srcdir / 'index.rst'
+                    else:
+                        path = app.srcdir / write_docstring
+
+                    docstring = dedent(func.__doc__)
+                    path.write_text(docstring, encoding='utf-8')
+
                 func(*(args + (app, status, warning)), **kwargs)
             except Exception as _exc:
                 exc = _exc

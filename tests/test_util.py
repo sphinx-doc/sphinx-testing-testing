@@ -172,3 +172,27 @@ class TestSphinxTesting(unittest.TestCase):
             execute()
 
         self.assertFalse(tmpdir.exists())
+
+    def test_with_app_write_docstring1(self):
+        srcdir = path(__file__).dirname() / 'examples'
+
+        @with_app(srcdir=srcdir, copy_srcdir_to_tmpdir=True,
+                  write_docstring=True)
+        def execute(app, status, warning):
+            """ Hello world """
+            content = (app.srcdir / 'index.rst').read_text()
+            self.assertEqual('Hello world ', content)
+
+        execute()
+
+    def test_with_app_write_docstring2(self):
+        srcdir = path(__file__).dirname() / 'examples'
+
+        @with_app(srcdir=srcdir, copy_srcdir_to_tmpdir=True,
+                  write_docstring='hello.rst')
+        def execute(app, status, warning):
+            """ Hello world """
+            content = (app.srcdir / 'hello.rst').read_text()
+            self.assertEqual('Hello world ', content)
+
+        execute()
