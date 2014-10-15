@@ -107,33 +107,40 @@ class TestApp(Sphinx):
             shutil.rmtree(tree, True)
 
 
-def with_app(*sphinxargs, **sphinxkwargs):
+class with_app(object):
     """
     Make a TestApp with args and kwargs, pass it to the test and clean up
     properly.
     """
-    def testcase(func):
+
+    def __init__(self, *sphinxargs, **sphinxkwargs):
+        self.sphinxargs = sphinxargs
+        self.sphinxkwargs = sphinxkwargs
+
+        self._write_docstring = sphinxkwargs.pop('write_docstring', False)
+        if self._write_docstring:
+            self.sphinxkwargs['copy_srcdir_to_tmpdir'] = True
+
+    def write_docstring(self, basedir, docstring):
+        if self._write_docstring:
+            if self._write_docstring is True:
+                filename = basedir / 'index.rst'
+            else:
+                filename = basedir / self._write_docstring
+
+            filename.write_text(dedent(docstring), encoding='utf-8')
+
+    def __call__(self, func):
         @wraps(func)
         def decorator(*args, **kwargs):
             app = None
             exc = None
+            sphinxkwargs = dict(self.sphinxkwargs)  # create copy
             try:
                 status = sphinxkwargs.setdefault('status', StringIO())
                 warning = sphinxkwargs.setdefault('warning', StringIO())
-                write_docstring = sphinxkwargs.pop('write_docstring', None)
-                if write_docstring:
-                    sphinxkwargs['copy_srcdir_to_tmpdir'] = True
-
-                app = TestApp(*sphinxargs, **sphinxkwargs)
-
-                if write_docstring:
-                    if write_docstring is True:
-                        path = app.srcdir / 'index.rst'
-                    else:
-                        path = app.srcdir / write_docstring
-
-                    docstring = dedent(func.__doc__)
-                    path.write_text(docstring, encoding='utf-8')
+                app = TestApp(*self.sphinxargs, **sphinxkwargs)
+                self.write_docstring(app.srcdir, func.__doc__)
 
                 func(*(args + (app, status, warning)), **kwargs)
             except Exception as _exc:
@@ -146,4 +153,3 @@ def with_app(*sphinxargs, **sphinxkwargs):
                     else:
                         app.cleanup()
         return decorator
-    return testcase
