@@ -56,7 +56,7 @@ class TestApp(Sphinx):
             srcdir = tmproot
 
         assert srcdir is not None, 'srcdir not found'
-        srcdir = path(srcdir)
+        srcdir = path(srcdir).abspath()
 
         if copy_srcdir_to_tmpdir:
             tmpdir = mkdtemp()
