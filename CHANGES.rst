@@ -1,6 +1,10 @@
 Changelog
 ==========
 
+0.5.0 (2014-10-15)
+-------------------
+* Add write_docstring option to with_app()
+
 0.4.0 (2014-09-30)
 -------------------
 - Add pathlib like accessors to path class: parent, name, suffix and stem
