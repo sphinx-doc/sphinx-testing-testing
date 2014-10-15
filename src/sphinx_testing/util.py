@@ -121,6 +121,9 @@ def with_app(*sphinxargs, **sphinxkwargs):
                 status = sphinxkwargs.setdefault('status', StringIO())
                 warning = sphinxkwargs.setdefault('warning', StringIO())
                 write_docstring = sphinxkwargs.pop('write_docstring', None)
+                if write_docstring:
+                    sphinxkwargs['copy_srcdir_to_tmpdir'] = True
+
                 app = TestApp(*sphinxargs, **sphinxkwargs)
 
                 if write_docstring:
