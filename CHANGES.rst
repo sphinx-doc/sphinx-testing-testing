@@ -1,14 +1,20 @@
 Changelog
 ==========
 
+0.5.2 (2014-10-16)
+-------------------
+- Fix bug:
+
+   - Fix srcdir and confdir are not abspath
+
 0.5.1 (2014-10-15)
 -------------------
-* Reimplement with_app decorator as class
-* Set copy_srcdir_to_tmpdir=True if write_docstring is specified
+- Reimplement with_app decorator as class
+- Set copy_srcdir_to_tmpdir=True if write_docstring is specified
 
 0.5.0 (2014-10-15)
 -------------------
-* Add write_docstring option to with_app()
+- Add write_docstring option to with_app()
 
 0.4.0 (2014-09-30)
 -------------------
