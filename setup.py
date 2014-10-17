@@ -9,6 +9,7 @@ classifiers = [
     "Programming Language :: Python",
     "Programming Language :: Python :: 2.6",
     "Programming Language :: Python :: 2.7",
+    "Programming Language :: Python :: 3.2",
     "Programming Language :: Python :: 3.3",
     "Programming Language :: Python :: 3.4",
     "Topic :: Software Development",
@@ -26,7 +27,7 @@ if sys.version_info < (3, 3):
 
 setup(
     name='sphinx-testing',
-    version='0.5.2',
+    version='0.6.0',
     description='testing utility classes and functions for Sphinx extensions',
     classifiers=classifiers,
     keywords=['sphinx', 'testing'],

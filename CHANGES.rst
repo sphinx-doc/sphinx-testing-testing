@@ -1,6 +1,11 @@
 Changelog
 ==========
 
+0.6.0 (2014-10-17)
+-------------------
+- Add python 3.2 support (with Sphinx < 1.3)
+- Replace ListOutput with StringIO
+
 0.5.2 (2014-10-16)
 -------------------
 - Fix bug:
