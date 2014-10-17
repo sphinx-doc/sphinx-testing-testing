@@ -19,30 +19,16 @@ import sphinx
 from six import StringIO
 from sphinx_testing.path import path
 from sphinx_testing.tmpdir import mkdtemp
-from sphinx_testing.util import ListOutput, TestApp, with_app
+from sphinx_testing.util import TestApp, with_app
 
 
 class TestSphinxTesting(unittest.TestCase):
-    def test_ListOutput(self):
-        output = ListOutput('name')
-        self.assertEqual('name', output.name)
-        self.assertEqual([], output.content)
-
-        output.write('Hello')
-        self.assertEqual(['Hello'], output.content)
-
-        output.write('World')
-        self.assertEqual(['Hello', 'World'], output.content)
-
-        output.reset()
-        self.assertEqual([], output.content)
-
     def test_TestApp(self):
         try:
             srcdir = path(__file__).dirname() / 'examples'
             app = TestApp(srcdir=srcdir)
             self.assertIsInstance(app._status, StringIO)
-            self.assertIsInstance(app._warning, ListOutput)
+            self.assertIsInstance(app._warning, StringIO)
 
             if sphinx.__version__ < '1.0.0':
                 app.build(True, None)

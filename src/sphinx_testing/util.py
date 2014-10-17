@@ -17,21 +17,6 @@ from sphinx_testing.path import path
 from sphinx_testing.tmpdir import mkdtemp
 
 
-class ListOutput(object):
-    """
-    File-like object that collects written text in a list.
-    """
-    def __init__(self, name):
-        self.name = name
-        self.content = []
-
-    def reset(self):
-        del self.content[:]
-
-    def write(self, text):
-        self.content.append(text)
-
-
 class TestApp(Sphinx):
     """
     A subclass of :class:`Sphinx` that runs on the test root, with some
@@ -84,7 +69,7 @@ class TestApp(Sphinx):
         if status is None:
             status = StringIO()
         if warning is None:
-            warning = ListOutput('stderr')
+            warning = StringIO()
 
         Sphinx.__init__(self, srcdir, confdir, outdir, doctreedir,
                         buildername, confoverrides, status,
