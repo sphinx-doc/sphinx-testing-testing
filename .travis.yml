@@ -1,5 +1,8 @@
 language: python
 python: 2.7
+cache:
+  directories:
+    - $HOME/.cache/pip
 env:
   matrix:
     - TOXENV=py26
@@ -12,6 +15,5 @@ env:
     - TOXENV=sphinx11
     - TOXENV=sphinx12
     - TOXENV=coverage
-
-install: pip install docutils tox
+install: pip install -U pip setuptools docutils tox
 script: tox
