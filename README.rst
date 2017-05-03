@@ -2,7 +2,7 @@
 sphinx-testing
 ==============
 
-`sphinx-testing` provides testing utility classes and functions for Sphinx extensions.
+``sphinx-testing`` provides testing utility classes and functions for Sphinx extensions.
 
 .. image:: https://travis-ci.org/sphinx-doc/sphinx-testing.svg?branch=master
    :target: https://travis-ci.org/sphinx-doc/sphinx-testing
